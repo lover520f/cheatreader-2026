@@ -233,6 +233,15 @@
   "autoPageGranularityLabel": "每次前进",
   "autoPageGranularityPage": "整页",
   "autoPageGranularityLine": "逐行",
+  "pageOverlapLabel": "翻页保留行数",
+  "pageOverlapValue": "{count, plural, =0{不保留} other{{count} 行}}",
+  "@pageOverlapValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "shortcutAutoPage": "自动翻页",
   "autoPageOnMessage": "自动翻页已开启",
   "autoPageOffMessage": "自动翻页已关闭",

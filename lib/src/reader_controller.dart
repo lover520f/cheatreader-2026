@@ -299,6 +299,17 @@ class ReaderController extends ChangeNotifier {
     _updateSettings(_settings.copyWith(autoPageGranularity: value));
   }
 
+  void setPageOverlapLineCount(int value) {
+    _updateSettings(
+      _settings.copyWith(
+        pageOverlapLineCount: value.clamp(
+          ReaderSettings.minPageOverlapLineCount,
+          ReaderSettings.maxPageOverlapLineCount,
+        ),
+      ),
+    );
+  }
+
   void setFontFamilyPreset(ReaderFontFamilyPreset value) {
     _updateSettings(_settings.copyWith(fontFamilyPreset: value));
   }
@@ -594,7 +605,8 @@ class ReaderController extends ChangeNotifier {
         _settings.shortcutBindings == value.shortcutBindings &&
         _settings.autoPageEnabled == value.autoPageEnabled &&
         _settings.autoPageIntervalSeconds == value.autoPageIntervalSeconds &&
-        _settings.autoPageGranularity == value.autoPageGranularity) {
+        _settings.autoPageGranularity == value.autoPageGranularity &&
+        _settings.pageOverlapLineCount == value.pageOverlapLineCount) {
       return;
     }
 

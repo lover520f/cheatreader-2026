@@ -233,6 +233,15 @@
   "autoPageGranularityLabel": "Advance per tick",
   "autoPageGranularityPage": "Page",
   "autoPageGranularityLine": "Line",
+  "pageOverlapLabel": "Page overlap",
+  "pageOverlapValue": "{count, plural, =0{None} =1{1 line} other{{count} lines}}",
+  "@pageOverlapValue": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "shortcutAutoPage": "Auto page-turn",
   "autoPageOnMessage": "Auto page-turn on",
   "autoPageOffMessage": "Auto page-turn off",

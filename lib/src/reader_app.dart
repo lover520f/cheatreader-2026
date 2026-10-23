@@ -607,8 +607,14 @@ class _ReaderSurfaceState extends State<ReaderSurface>
     return true;
   }
 
+  int get _pageStepCount => math.max(
+    1,
+    _visibleVisualLineCapacity -
+        widget.controller.settings.pageOverlapLineCount,
+  );
+
   Future<bool> _advanceReadingPage() async {
-    final stepCount = math.max(1, _visibleVisualLineCapacity - 1);
+    final stepCount = _pageStepCount;
     var movedAny = false;
     var animated = false;
     for (var index = 0; index < stepCount; index += 1) {
@@ -688,7 +694,7 @@ class _ReaderSurfaceState extends State<ReaderSurface>
   }
 
   Future<void> _rewindReadingPage() async {
-    final stepCount = math.max(1, _visibleVisualLineCapacity - 1);
+    final stepCount = _pageStepCount;
     var animated = false;
     for (var index = 0; index < stepCount; index += 1) {
       final moved = _rewindReadingInternal(animate: !animated);
@@ -2123,6 +2129,20 @@ class _ReaderControlPanelState extends State<_ReaderControlPanel> {
         ),
         onChanged: (value) =>
             controller.setAutoPageIntervalSeconds(value.round()),
+      ),
+      const SizedBox(height: 12),
+      _SliderRow(
+        label: l10n.pageOverlapLabel,
+        value: controller.settings.pageOverlapLineCount.toDouble(),
+        min: ReaderSettings.minPageOverlapLineCount.toDouble(),
+        max: ReaderSettings.maxPageOverlapLineCount.toDouble(),
+        divisions:
+            ReaderSettings.maxPageOverlapLineCount -
+            ReaderSettings.minPageOverlapLineCount,
+        displayValue: l10n.pageOverlapValue(
+          controller.settings.pageOverlapLineCount,
+        ),
+        onChanged: (value) => controller.setPageOverlapLineCount(value.round()),
       ),
       const SizedBox(height: 12),
       Text(l10n.languageTitle),

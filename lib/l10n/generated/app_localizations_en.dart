@@ -522,6 +522,21 @@ class AppLocalizationsEn extends AppLocalizations {
   String get autoPageGranularityLine => 'Line';
 
   @override
+  String get pageOverlapLabel => 'Page overlap';
+
+  @override
+  String pageOverlapValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lines',
+      one: '1 line',
+      zero: 'None',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get shortcutAutoPage => 'Auto page-turn';
 
   @override

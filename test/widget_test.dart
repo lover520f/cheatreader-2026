@@ -647,6 +647,60 @@ void main() {
     );
   });
 
+  testWidgets('page turns keep the configured number of overlap lines', (
+    WidgetTester tester,
+  ) async {
+    tester.view.devicePixelRatio = 1;
+    tester.view.physicalSize = const Size(760, 132);
+    addTearDown(tester.view.resetDevicePixelRatio);
+    addTearDown(tester.view.resetPhysicalSize);
+
+    Future<String> textAfterPageDown(int overlap) async {
+      final controller = ReaderController(
+        initialContent: List<String>.generate(
+          12,
+          (index) => 'LINE-${index + 1}',
+        ).join('\n'),
+        preferencesStore: MemoryReaderPreferencesStore(
+          initialSettings: ReaderSettings.defaults.copyWith(
+            lineSpacing: ReaderSettings.minLineSpacing,
+            pageOverlapLineCount: overlap,
+          ),
+        ),
+        windowController: _FakePlatformWindowController(),
+        fileBookmarkService: _FakeReaderFileBookmarkService(),
+        importService: _FakeReaderImportService(),
+        libraryStorage: MemoryReaderLibraryStorage(),
+      );
+      await controller.initialize();
+
+      await tester.pumpWidget(
+        CheatReaderApp(
+          controller: controller,
+          windowController: _FakePlatformWindowController(),
+        ),
+      );
+      await tester.pump();
+      expect(
+        tester.widget<Text>(find.byType(Text).first).data,
+        'LINE-1\nLINE-2\nLINE-3\nLINE-4\nLINE-5',
+      );
+
+      await tester.sendKeyEvent(LogicalKeyboardKey.pageDown);
+      await tester.pumpAndSettle();
+      return tester.widget<Text>(find.byType(Text).first).data!;
+    }
+
+    expect(
+      await textAfterPageDown(0),
+      'LINE-6\nLINE-7\nLINE-8\nLINE-9\nLINE-10',
+    );
+    expect(
+      await textAfterPageDown(2),
+      'LINE-4\nLINE-5\nLINE-6\nLINE-7\nLINE-8',
+    );
+  });
+
   testWidgets('can disable punctuation-preferred visual wrapping', (
     WidgetTester tester,
   ) async {

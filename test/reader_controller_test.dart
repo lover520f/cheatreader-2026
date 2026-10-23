@@ -425,7 +425,27 @@ void main() {
         ReaderSettings.minAutoPageIntervalSeconds,
       );
 
+      expect(
+        controller.settings.pageOverlapLineCount,
+        ReaderSettings.defaultPageOverlapLineCount,
+      );
+      controller.setPageOverlapLineCount(99);
+      expect(
+        controller.settings.pageOverlapLineCount,
+        ReaderSettings.maxPageOverlapLineCount,
+      );
+      controller.setPageOverlapLineCount(-3);
+      expect(
+        controller.settings.pageOverlapLineCount,
+        ReaderSettings.minPageOverlapLineCount,
+      );
+      await Future<void>.delayed(Duration.zero);
+
       final saved = await store.loadSnapshot();
+      expect(
+        saved.settings.pageOverlapLineCount,
+        ReaderSettings.minPageOverlapLineCount,
+      );
       expect(saved.settings.autoPageEnabled, isTrue);
       expect(
         saved.settings.autoPageIntervalSeconds,
@@ -912,6 +932,7 @@ void main() {
         autoPageEnabled: true,
         autoPageIntervalSeconds: 12,
         autoPageGranularity: ReaderAutoPageGranularity.line,
+        pageOverlapLineCount: 3,
       );
 
       await store.saveSettings(settings);
@@ -960,6 +981,7 @@ void main() {
         loaded.settings.autoPageGranularity,
         ReaderAutoPageGranularity.line,
       );
+      expect(loaded.settings.pageOverlapLineCount, 3);
       expect(loaded.bookshelf.single.path, '/tmp/book.txt');
       expect(loaded.bookshelf.single.burnModeEnabled, isFalse);
       expect(loaded.bookshelf.single.fileBookmark, 'bookmark:/tmp/book.txt');

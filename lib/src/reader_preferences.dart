@@ -79,6 +79,7 @@ class SharedPreferencesReaderPreferencesStore extends ReaderPreferencesStore {
   static const _autoPageEnabledKey = 'reader.autoPageEnabled';
   static const _autoPageIntervalSecondsKey = 'reader.autoPageIntervalSeconds';
   static const _autoPageGranularityKey = 'reader.autoPageGranularity';
+  static const _pageOverlapLineCountKey = 'reader.pageOverlapLineCount';
   static const _bookshelfKey = 'reader.bookshelf';
 
   final SharedPreferences _preferences;
@@ -198,6 +199,10 @@ class SharedPreferencesReaderPreferencesStore extends ReaderPreferencesStore {
           ReaderAutoPageGranularity.values,
           _preferences.getString(_autoPageGranularityKey),
           ReaderSettings.defaults.autoPageGranularity,
+        ),
+        pageOverlapLineCount: _normalizePageOverlapLineCount(
+          _preferences.getInt(_pageOverlapLineCountKey) ??
+              ReaderSettings.defaults.pageOverlapLineCount,
         ),
       ),
       bookshelf:
@@ -333,6 +338,10 @@ class SharedPreferencesReaderPreferencesStore extends ReaderPreferencesStore {
       _autoPageGranularityKey,
       settings.autoPageGranularity.name,
     );
+    await _preferences.setInt(
+      _pageOverlapLineCountKey,
+      _normalizePageOverlapLineCount(settings.pageOverlapLineCount),
+    );
   }
 
   @override
@@ -454,6 +463,13 @@ class SharedPreferencesReaderPreferencesStore extends ReaderPreferencesStore {
     return value.clamp(
       ReaderSettings.minAutoPageIntervalSeconds,
       ReaderSettings.maxAutoPageIntervalSeconds,
+    );
+  }
+
+  int _normalizePageOverlapLineCount(int value) {
+    return value.clamp(
+      ReaderSettings.minPageOverlapLineCount,
+      ReaderSettings.maxPageOverlapLineCount,
     );
   }
 

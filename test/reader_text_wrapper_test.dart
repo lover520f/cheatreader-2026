@@ -42,6 +42,35 @@ void main() {
     }
   });
 
+  test('keeps a paragraph that fits on one line intact', () {
+    for (final text in ['「呃！？」', '甲乙丙，丁戊', '“嗯。”他说']) {
+      expect(wrap(text), [text]);
+    }
+  });
+
+  test('closing punctuation never starts a wrapped line', () {
+    const noLineStart = '」』”）》〉】〕］｝，。！？：；、…)]}.,!?:;';
+    final texts = [
+      '「呃！？」' * 30,
+      '「我知道了。」他点头。' * 20,
+      '『你说什么？！』' * 25,
+      '“好的。”' * 30,
+    ];
+    for (final text in texts) {
+      for (final width in [120.0, 150.0, 180.0, 220.0]) {
+        final segments = wrap(text, width: width);
+        expect(segments.join(), text);
+        for (final segment in segments.skip(1)) {
+          expect(
+            noLineStart.contains(segment.characters.first),
+            isFalse,
+            reason: 'width $width produced a line starting with "$segment"',
+          );
+        }
+      }
+    }
+  });
+
   test('does not split surrogate pairs or combined characters', () {
     final text = 'a\u0301\u{1F642}' * 20;
     final segments = wrap(text, width: 18);

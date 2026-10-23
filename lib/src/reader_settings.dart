@@ -79,6 +79,7 @@ class ReaderSettings {
     required this.autoPageEnabled,
     required this.autoPageIntervalSeconds,
     required this.autoPageGranularity,
+    this.pageOverlapLineCount = defaultPageOverlapLineCount,
   });
 
   static const double minTextBrightnessFactor = 0.35;
@@ -96,6 +97,9 @@ class ReaderSettings {
   static const int minAutoPageIntervalSeconds = 1;
   static const int maxAutoPageIntervalSeconds = 60;
   static const int defaultAutoPageIntervalSeconds = 5;
+  static const int minPageOverlapLineCount = 0;
+  static const int maxPageOverlapLineCount = 5;
+  static const int defaultPageOverlapLineCount = 1;
 
   static const ReaderSettings defaults = ReaderSettings(
     oneLineMode: false,
@@ -125,6 +129,7 @@ class ReaderSettings {
     autoPageEnabled: false,
     autoPageIntervalSeconds: defaultAutoPageIntervalSeconds,
     autoPageGranularity: ReaderAutoPageGranularity.page,
+    pageOverlapLineCount: defaultPageOverlapLineCount,
   );
 
   final bool oneLineMode;
@@ -154,6 +159,7 @@ class ReaderSettings {
   final bool autoPageEnabled;
   final int autoPageIntervalSeconds;
   final ReaderAutoPageGranularity autoPageGranularity;
+  final int pageOverlapLineCount;
 
   static const Object _unset = Object();
 
@@ -185,6 +191,7 @@ class ReaderSettings {
     bool? autoPageEnabled,
     int? autoPageIntervalSeconds,
     ReaderAutoPageGranularity? autoPageGranularity,
+    int? pageOverlapLineCount,
   }) {
     return ReaderSettings(
       oneLineMode: oneLineMode ?? this.oneLineMode,
@@ -226,6 +233,7 @@ class ReaderSettings {
       autoPageIntervalSeconds:
           autoPageIntervalSeconds ?? this.autoPageIntervalSeconds,
       autoPageGranularity: autoPageGranularity ?? this.autoPageGranularity,
+      pageOverlapLineCount: pageOverlapLineCount ?? this.pageOverlapLineCount,
     );
   }
 

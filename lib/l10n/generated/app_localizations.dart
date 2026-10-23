@@ -1016,6 +1016,18 @@ abstract class AppLocalizations {
   /// **'Line'**
   String get autoPageGranularityLine;
 
+  /// No description provided for @pageOverlapLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Page overlap'**
+  String get pageOverlapLabel;
+
+  /// No description provided for @pageOverlapValue.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{None} =1{1 line} other{{count} lines}}'**
+  String pageOverlapValue(int count);
+
   /// No description provided for @shortcutAutoPage.
   ///
   /// In en, this message translates to:

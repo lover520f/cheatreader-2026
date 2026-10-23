@@ -500,6 +500,20 @@ class AppLocalizationsZh extends AppLocalizations {
   String get autoPageGranularityLine => '逐行';
 
   @override
+  String get pageOverlapLabel => '翻页保留行数';
+
+  @override
+  String pageOverlapValue(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count 行',
+      zero: '不保留',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get shortcutAutoPage => '自动翻页';
 
   @override

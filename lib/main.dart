@@ -99,5 +99,6 @@ bool _settingsMatch(ReaderSettings a, ReaderSettings b) {
       a.shortcutBindings == b.shortcutBindings &&
       a.autoPageEnabled == b.autoPageEnabled &&
       a.autoPageIntervalSeconds == b.autoPageIntervalSeconds &&
-      a.autoPageGranularity == b.autoPageGranularity;
+      a.autoPageGranularity == b.autoPageGranularity &&
+      a.pageOverlapLineCount == b.pageOverlapLineCount;
 }
